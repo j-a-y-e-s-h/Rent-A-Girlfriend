@@ -1,16 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function LoginPopup({ handleCloseLogin, handleShowSignup }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [popupVisible, setPopupVisible] = useState(false);
+  const [popupText, setPopupText] = useState("");
+  const [popupLoginVisible, setPopupLoginVisible] = useState(false);
+  const [popupLoginText, setPopupLoginText] = useState("");
+
+  useEffect(() => {
+    let timer;
+    if (popupVisible) {
+      timer = setTimeout(() => {
+        setPopupVisible(false);
+        setPopupText("");
+      }, 2000);
+    }
+    return () => clearTimeout(timer);
+  }, [popupVisible]);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({ email, password });
     fetch("http://localhost:5000/login", {
       method: "POST",
       crossDomain: true,
@@ -28,20 +43,41 @@ function LoginPopup({ handleCloseLogin, handleShowSignup }) {
       .then((data) => {
         console.log(data, "userLogin");
         if (data.status === "ok") {
-          alert("Login Successful");
+          setPopupLoginText("Login Successful");
+          setPopupLoginVisible(true);
           window.localStorage.setItem("token", data.data);
-          window.location.href = "./NewHome";
+          setTimeout(() => {
+            window.location.href = "./NewHome";
+          }, 1200);
+        } else if (data.error === "Invalid Password") {
+          setPopupText("Invalid Password");
+          setPopupVisible(true);
+        } else if (data.error === "User Not Found") {
+          setPopupText("User not found");
+          setPopupVisible(true);
         }
+      })
+      .catch((error) => {
+        console.error(error);
       });
   };
-  handleSubmit.bind(this);
 
   return (
     <div className="fixed inset-0 z-50 flex justify-center items-center bg-gray-900 bg-opacity-75">
-      <div className="bg-white p-6 rounded-lg relative h-[402px] w-[330px]">
-        <div className="flex justify-end ">
+      {popupVisible && (
+        <div className="fixed center-0 z-[60] px-4 py-2 w-48 rounded-md bg-red-500 text-white text-center">
+          {popupText}
+        </div>
+      )}
+      {popupLoginVisible && (
+        <div className="fixed center-0 z-[60] px-4 py-2 w-48 rounded-md bg-green-500 text-white text-center">
+          {popupLoginText}
+        </div>
+      )}
+      <div className="bg-white p-6 rounded-lg relative h-[402px] w-[330px] sm:max-w-md">
+        <div className="flex justify-end">
           <span
-            className="inline-block  align-middle cursor-pointer"
+            className="inline-block align-middle cursor-pointer"
             onClick={handleCloseLogin}
           >
             <i className="uil uil-times form_close text-gray-600 hover:text-gray-900 text-2xl"></i>
@@ -55,7 +91,7 @@ function LoginPopup({ handleCloseLogin, handleShowSignup }) {
           <div className="flex items-center mb-0.5">
             <i className="uil uil-envelope-alt email mr-2.5 text-xl text-gray-800"></i>
             <input
-              className=" border-b-2 border-gray-400 appearance-none py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"
+              className="border-b-2 border-gray-400 appearance-none py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"
               id="email"
               type="email"
               placeholder="Enter your email"
@@ -97,7 +133,7 @@ function LoginPopup({ handleCloseLogin, handleShowSignup }) {
             />
             <label
               htmlFor="terms-and-conditions"
-              className=" text-gray-600  text-xs cursor-pointer"
+              className="text-gray-600 text-xs cursor-pointer"
             >
               I agree to the{" "}
               <a
@@ -117,11 +153,10 @@ function LoginPopup({ handleCloseLogin, handleShowSignup }) {
             Login now
           </button>
         </form>
-
-        <p className=" text-center text-sm ">
+        <p className="text-center text-sm ">
           Don't have an account?{" "}
           <button
-            className="text-blue-500  hover:underline focus:outline-none"
+            className="text-blue-500 hover:underline focus:outline-none"
             type="button"
             onClick={handleShowSignup}
           >
