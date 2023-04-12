@@ -5,7 +5,7 @@ const Body = () => {
   const [sliderOpen, setSliderOpen] = useState(false);
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden" >
+    <div className="flex flex-col h-screen overflow-hidden">
       <div
         name="a"
         className="md:hidden fixed bottom-0 left-0 right-0 bg-gray-100 z-10 rounded-t-xl overflow-hidden transform transition-all duration-500 ease-out border-t-4 border-gray-500"
@@ -13,29 +13,24 @@ const Body = () => {
       >
         <button
           onClick={() => setSliderOpen(false)}
-          className="absolute top-0 right-0 p-2"
+          className="absolute top-0 right-0 p-3"
         >
-          X
+          <i className="uil uil-times text-gray-600 hover:text-gray-900 text-2xl mr-1"></i>
         </button>
-        {/* Updated code block */}
         <div className={`bg-gray-100 ${sliderOpen ? "py-4" : "h-0"}`}>
           <div className="w-1/2 mx-auto">
             <Top />
           </div>
         </div>
-        {/* End of updated code block */}
       </div>
-    
+
       <div className="h-full flex overflow-y-hidden">
-        <div
-          name="a"
-          className="hidden md:block w-1/4 bg-gray-100"
-        >
+        <div name="a" className="hidden md:block w-1/4 bg-gray-100">
           <Top />
         </div>
         <div name="b" className="w-full md:w-3/4 bg-gray-200"></div>
       </div>
-    
+
       <button
         onClick={() => setSliderOpen(!sliderOpen)}
         className="md:hidden fixed bottom-0 left-0 right-0 w-full py-2 text-black font-bold bg-gradient-to-t from-stone-600 via-transparent to-transparent hover:from-stone-600 "
@@ -44,7 +39,6 @@ const Body = () => {
         Trending
       </button>
     </div>
-    
   );
 };
 

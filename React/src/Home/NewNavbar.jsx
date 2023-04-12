@@ -28,21 +28,27 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="flex justify-between items-center h-24 bg-slate-800 px-5 sticky z-2 top-0 mt-0.5">
-      <div className="flex items-center">
+    <nav className="flex items-center justify-between flex-wrap bg-slate-800 px-6 py-3 top-0 mt-[0.4px]">
+      <div className="flex items-center flex-shrink-0 mr-6">
         <a href="/">
-          <img src="logo.png" alt="Logo" className="h-[90px]" />
+          <img src="logo.png" alt="Logo" className="h-[73px]" />
         </a>
       </div>
       <div className="flex items-center space-x-3">
-        <a href="/">
-          <img src="notification.png" alt="Notification" className="h-16" />
-        </a>
-        <p className="cursor-pointer">
-          <img src="profile.png" alt="Profile" className="h-[60px]" />
+        <button className=" flex items-center px-3 py-2 border rounded text-gray-500 border-gray-600 hover:text-white hover:border-white ">
+          <img
+            src="notification.png"
+            alt="Notification"
+            className="cursor-pointer h-10"
+          />
+        </button>
+        <p className="block text-md text-white mr-4 cursor-pointer">
+          <img src="profile.png" alt="Profile" className="h-[50px]" />
         </p>
         {userData && (
-          <p className="cursor-pointer text-sm text-white ">{userData.name}</p>
+          <p className="block text-base font-medium text-white mr-8 cursor-pointer">
+            {userData.name}
+          </p>
         )}
       </div>
     </nav>

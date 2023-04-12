@@ -2,7 +2,7 @@ import React from 'react'
 const Top = () => {
   return (
     <>
-      <div className="flex flex-row gap-4 items-end justify-around px-6 mt-64">
+      <div className="flex flex-row gap-4 items-end justify-around px-6 mt-52">
         <div className="" >
           <img src="1.png" alt="Girl" className=" -ml-3 mb-1 " />
           <span className='mx-5 font-medium'>Heer</span>
@@ -19,9 +19,6 @@ const Top = () => {
           <div className="w-20 bg-green-400 h-24 rounded-t-md flex items-center justify-center text-white font-semibold text-2xl">3</div>
         </div>
       </div>
-
-
-
     </>
   )
 }
