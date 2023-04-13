@@ -79,6 +79,40 @@ app.post("/NewNavbar", async (req, res) => {
   } catch (error) {}
 });
 
+app.post("/addImages", async (req, res) => {
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      throw new Error("Authorization header is missing");
+    }
+    const token = authHeader.split(" ")[1];
+    const decodedToken = jwt.verify(token, JWT_SECRET);
+
+    const userEmail = decodedToken.email;
+
+    let { image1, image2, image3, image4 } = req.body;
+
+    const updatedUser = await User.findOneAndUpdate(
+      { email: userEmail },
+      { image1, image2, image3, image4 },
+      { new: true }
+    );
+
+    res.json({
+      status: "ok",
+      message: "Images added successfully",
+      image1: updatedUser.image1,
+      image2: updatedUser.image2,
+      image3: updatedUser.image3,
+      image4: updatedUser.image4,
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({ status: "error", error: error.message });
+  }
+});
+
+
 app.get("/getImages", async(req, res) => {
   try{
       const authHeader = req.headers.authorization;
