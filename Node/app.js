@@ -50,7 +50,7 @@ app.post("/register", async (req, res) => {
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
-  if (!User) {
+  if (!user) {
     return res.json({ error: "User Not Found" });
   }
   if (await bcrypt.compare(password, user.password)) {
@@ -79,6 +79,34 @@ app.post("/NewNavbar", async (req, res) => {
   } catch (error) {}
 });
 
+app.get("/getImages", async(req, res) => {
+  try{
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+          throw new Error("Authorization header is missing");
+      }
+      const token = authHeader.split(' ')[1];
+      const decodedToken = jwt.verify(token, JWT_SECRET);
+      
+      const userEmail = decodedToken.email;
+
+      const user = await User.findOne({email: userEmail});
+      
+      // Retrieve the base64 images from the user object
+      const image1 = user.image1;
+      const image2 = user.image2;
+      const image3 = user.image3;
+      const image4 = user.image4;
+
+      // Return the base64 images as JSON response
+      res.json({status: "ok", image1, image2, image3, image4});
+  }catch(error){
+      console.log(error);
+      res.json({status: "error", error: error.message});
+  }
+});
+
 app.listen(5000, () => {
   console.log("server started....");
 });
+
