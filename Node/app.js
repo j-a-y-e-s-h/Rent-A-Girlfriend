@@ -5,6 +5,7 @@ const app = express();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+
 app.use(cors());
 app.use(express.json());
 
