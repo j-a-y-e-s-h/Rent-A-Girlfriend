@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [userData, setUserData] = useState(null);
@@ -12,7 +13,7 @@ const Navbar = () => {
       crossDomain: true,
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json",
+        Accept: "applicatioan/json",
         "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify({
@@ -42,9 +43,11 @@ const Navbar = () => {
             className="cursor-pointer h-10"
           />
         </button>
-        <p className="block text-md text-white mr-4 cursor-pointer">
-          <img src="profile.png" alt="Profile" className="h-[50px]" />
-        </p>
+        <Link to="/profile">
+          <p name="aa" className=" block text-md text-white mr-4 cursor-pointer">
+            <img src="profile.png" alt="Profile" className="h-[50px]" />
+          </p>
+        </Link>
         {userData && (
           <p className="block text-base font-medium text-white mr-8 cursor-pointer">
             {userData.name}
