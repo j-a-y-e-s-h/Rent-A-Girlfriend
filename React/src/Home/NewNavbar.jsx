@@ -29,7 +29,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="flex items-center justify-between flex-wrap bg-slate-800 px-6 py-3 top-0 mt-[0.4px]">
+    <nav className="flex items-center justify-between flex-wrap z-50 sticky bg-slate-800 px-6 py-3 top-0 mt-[0.4px]">
       <div className="flex items-center flex-shrink-0 mr-6">
         <a href="/">
           <img src="logo.png" alt="Logo" className="h-[73px]" />

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import NewNavbar from "./NewNavbar";
 
 const Profile = () => {
   const [image1, setImage1] = useState(null);
@@ -32,6 +33,11 @@ const Profile = () => {
   const handleImageChange = (event, setState) => {
     const file = event.target.files[0];
     const reader = new FileReader();
+    const maxSize = 1024 * 1024; // 1 MB
+    if (file.size > maxSize) {
+      alert("File size is too large. Please select an image less than 1 MB.");
+      return;
+    }
     reader.onload = (e) => {
       const img = new Image();
       img.onload = () => {
@@ -112,106 +118,108 @@ const Profile = () => {
 
   return (
     <>
-      <div className="flex flex-col overflow-auto md:flex-row md:h-full gap-4 ">
-        <div className="w-full h-[38rem] md:w-1/4 bg-gray-100 relative">
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => handleImageChange(e, setImage1)}
-            className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer z-10"
-          />
-          {image1 && (
-            <img
-              src={image1}
-              alt="Box 1 Image"
-              className="w-full h-full object-cover"
-              style={{ height: "100%" }}
-            />
-          )}
-          {!image1 && (
-            <div className="w-full h-full flex items-center justify-center">
-              <p className="text-gray-400">Upload Image 1</p>
+      <NewNavbar />
+      <div className="flex ">
+        <div className="w-1/5 h-[150vh] bg-gray-900">
+          {/* First column on the right */}
+        </div>
+        <div className="w-4/5 flex h-[150vh] bg-gray-200">
+          {/* Second column on the left */}
+          <div className=" flex gap-4  mt-6">
+            <div className=" ml-72 h-[512px] bg-gray-100 w-[290px] relative flex ">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleImageChange(e, setImage1)}
+                className="fixed h-[512px] w-[290px] opacity-0 cursor-pointer z-10"
+              />
+              {image1 && (
+                <img
+                  src={image1}
+                  alt="Box 1 Image"
+                  className="h-[512px]  w-[290px] object-cover"
+                  style={{ height: "100%" }}
+                />
+              )}
+              {!image1 && (
+                <div className="h-[512px]  w-[290px] flex items-center justify-center">
+                  <p className="text-gray-400">Upload Image 1</p>
+                </div>
+              )}
+          </div>
             </div>
-          )}
+            <div className="w-1/3 grid gap-4 grid-cols-1 grid-rows-3">
+              <div className="w-32 h-[200px] mt-6 bg-gray-100 ">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => handleImageChange(e, setImage2)}
+                  className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer z-10"
+                />
+                {image2 && (
+                  <img
+                    src={image2}
+                    alt="Box 2 Image"
+                    className="w-full h-full object-cover"
+                    style={{ height: "calc(100% - 20px)" }}
+                  />
+                )}
+                {!image2 && (
+                  <div className="w-full h-full flex items-center justify-center">
+                    <p className="text-gray-400">Upload Image 2</p>
+                  </div>
+                )}
+              </div>
+              <div className="h-48 w-[28%] bg-gray-100 relative">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => handleImageChange(e, setImage3)}
+                  className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer z-10"
+                />
+                {image3 && (
+                  <img
+                    src={image3}
+                    alt="Box 3 Image"
+                    className="w-full h-full object-cover"
+                    style={{ height: "calc(100% - 20px)" }}
+                  />
+                )}
+                {!image3 && (
+                  <div className="w-full h-full flex items-center justify-center">
+                    <p className="text-gray-400">Upload Image 3</p>
+                  </div>
+                )}
+              </div>
+              <div className="h-48 w-[28%] bg-gray-100 relative">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => handleImageChange(e, setImage4)}
+                  className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer z-10"
+                />
+                {image4 && (
+                  <img
+                    src={image4}
+                    alt="Box 4 Image"
+                    className="w-full h-full object-cover"
+                    style={{ height: "calc(100% - 20px)" }}
+                  />
+                )}
+                {!image4 && (
+                  <div className="w-full h-full flex items-center justify-center">
+                    <p className="text-gray-400">Upload Image 4</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          <button
+            className="bg-red-400 h-10 mt-4 w-24 rounded-lg"
+            onClick={handleSubmit}
+          >
+            Submit
+          </button>
         </div>
-        <div className="w-full md:w-1/3 grid gap-4 md:h-full grid-cols-1 md:grid-rows-3">
-          <div className="h-48 w-[28%] bg-gray-100 relative">
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => handleImageChange(e, setImage2)}
-              className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer z-10"
-            />
-            {image2 && (
-              <img
-                src={image2}
-                alt="Box 2 Image"
-                className="w-full h-full object-cover"
-                style={{ height: "calc(100% - 20px)" }}
-              />
-            )}
-            {!image2 && (
-              <div className="w-full h-full flex items-center justify-center">
-                <p className="text-gray-400">Upload Image 2</p>
-              </div>
-            )}
-          </div>
-          <div className="h-48 w-[28%] bg-gray-100 relative">
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => handleImageChange(e, setImage3)}
-              className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer z-10"
-            />
-            {image3 && (
-              <img
-                src={image3}
-                alt="Box 3 Image"
-                className="w-full h-full object-cover"
-                style={{ height: "calc(100% - 20px)" }}
-              />
-            )}
-            {!image3 && (
-              <div className="w-full h-full flex items-center justify-center">
-                <p className="text-gray-400">Upload Image 3</p>
-              </div>
-            )}
-          </div>
-          <div className="h-48 w-[28%] bg-gray-100 relative">
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => handleImageChange(e, setImage4)}
-              className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer z-10"
-            />
-            {image4 && (
-              <img
-                src={image4}
-                alt="Box 4 Image"
-                className="w-full h-full object-cover"
-                style={{ height: "calc(100% - 20px)" }}
-              />
-            )}
-            {!image4 && (
-              <div className="w-full h-full flex items-center justify-center">
-                <p className="text-gray-400">Upload Image 4</p>
-              </div>
-            )}
-          </div>
-        </div>
-        <button
-          className="bg-red-400 h-10 mt-96 w-24 rounded-lg"
-          onClick={handleSubmit}
-        >
-          Submit
-        </button>
-      </div>
-
-      <div className="flex gap-5 ">
-        <div className="aspect-[9/16] w-full h-full border-4"></div>
-        <div className="aspect-[9/16] w-full h-full border-4"></div>
-        <div className="aspect-[9/16] w-full h-full border-4"></div>
-        <div className="aspect-[9/16] w-full h-full border-4"></div>
       </div>
     </>
   );
