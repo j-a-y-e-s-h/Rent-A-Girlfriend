@@ -15,7 +15,7 @@ function LoginPopup({ handleCloseLogin, handleShowSignup }) {
       timer = setTimeout(() => {
         setPopupVisible(false);
         setPopupText("");
-      }, 2000);
+      }, 1000);
     }
     return () => clearTimeout(timer);
   }, [popupVisible]);

@@ -2,7 +2,17 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const [userDetails, setUserDetails] = useState({
+    name: "",
+    email: "",
+    password: "",
+    image1: "",
+    image2: "",
+    image3: "",
+    image4: "",
+  });
   const [userData, setUserData] = useState(null);
+  
 
   useEffect(() => {
     const token = window.localStorage.getItem("token");
@@ -26,6 +36,36 @@ const Navbar = () => {
         setUserData(data.data);
       })
       .catch((error) => console.log(error));
+      fetch("http://localhost:5000/getImages", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status === "ok") {
+          const { image1, image2, image3, image4 } = data;
+          const promises = [image1, image2, image3, image4].map((image) =>
+            fetch(image)
+          );
+          Promise.all(promises).then((responses) =>
+            Promise.all(
+              responses.map((response) =>
+                response.blob().then((blob) => URL.createObjectURL(blob))
+              )
+            ).then((urls) =>
+              setUserDetails((prevState) => ({
+                ...prevState,
+                image1: urls[0],
+                image2: urls[1],
+                image3: urls[2],
+                image4: urls[3],
+              }))
+            )
+          );
+        }
+      })
+      .catch((error) => console.log(error));
   }, []);
 
   return (
@@ -45,7 +85,7 @@ const Navbar = () => {
         </button>
         <Link to="/profile">
           <p name="aa" className=" block text-md text-white mr-4 cursor-pointer">
-            <img src="profile.png" alt="Profile" className="h-[50px]" />
+            <img src={userDetails.image1} alt="Profile" className="mx-auto h-14 w-14 rounded-full sm:mx-0 sm:flex-shrink-0" />
           </p>
         </Link>
         {userData && (

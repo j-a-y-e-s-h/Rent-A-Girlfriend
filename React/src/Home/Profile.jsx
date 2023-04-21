@@ -1,227 +1,234 @@
 import React, { useState, useEffect } from "react";
 import NewNavbar from "./NewNavbar";
+import ProfileUpd from "./ProfileUpd";
 
 const Profile = () => {
-  const [image1, setImage1] = useState(null);
-  const [image2, setImage2] = useState(null);
-  const [image3, setImage3] = useState(null);
-  const [image4, setImage4] = useState(null);
-
-  const fetchImages = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const response = await fetch("http://localhost:5000/getImages", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = await response.json();
-      const { image1, image2, image3, image4 } = data;
-      setImage1(image1);
-      setImage2(image2);
-      setImage3(image3);
-      setImage4(image4);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [userDetails, setUserDetails] = useState({
+    name: "",
+    email: "",
+    password: "",
+    image1: "",
+    image2: "",
+    image3: "",
+    image4: "",
+  });
+  const [userData, setUserData] = useState(null);
+  const [activeTab, setActiveTab] = useState("profile");
 
   useEffect(() => {
-    fetchImages();
-  }, []);
+    const token = window.localStorage.getItem("token");
+    if (!token) return;
 
-  const handleImageChange = (event, setState) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    const maxSize = 1024 * 1024; // 1 MB
-    if (file.size > maxSize) {
-      alert("File size is too large. Please select an image less than 1 MB.");
-      return;
-    }
-    reader.onload = (e) => {
-      const img = new Image();
-      img.onload = () => {
-        if (img.width / img.height === 9 / 16) {
-          setState(e.target.result);
-        } else {
-          alert(
-            "Invalid image aspect ratio. Please upload an image with a 9:16 aspect ratio."
-          );
-        }
-      };
-      img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const handleSubmit = async () => {
-    let base64Image1 = null;
-    let base64Image2 = null;
-    let base64Image3 = null;
-    let base64Image4 = null;
-
-    if (image1) {
-      const response1 = await fetch(image1);
-      const blob1 = await response1.blob();
-      base64Image1 = await convertBlobToBase64(blob1);
-    }
-
-    if (image2) {
-      const response2 = await fetch(image2);
-      const blob2 = await response2.blob();
-      base64Image2 = await convertBlobToBase64(blob2);
-    }
-
-    if (image3) {
-      const response3 = await fetch(image3);
-      const blob3 = await response3.blob();
-      base64Image3 = await convertBlobToBase64(blob3);
-    }
-
-    if (image4) {
-      const response4 = await fetch(image4);
-      const blob4 = await response4.blob();
-      base64Image4 = await convertBlobToBase64(blob4);
-    }
-
-    const token = localStorage.getItem("token");
-
-    const data = {
-      image1: base64Image1,
-      image2: base64Image2,
-      image3: base64Image3,
-      image4: base64Image4,
-    };
-
-    await fetch("http://localhost:5000/addImages", {
+    fetch("http://localhost:5000/NewNavbar", {
       method: "POST",
+      crossDomain: true,
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Accept: "applicatioan/json",
+        "Access-Control-Allow-Origin": "*",
       },
-      body: JSON.stringify(data),
-    });
+      body: JSON.stringify({
+        token,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "userData");
+        setUserData(data.data);
+      })
+      .catch((error) => console.log(error));
+    
+    fetch("http://localhost:5000/getImages", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status === "ok") {
+          const { image1, image2, image3, image4 } = data;
+          const promises = [image1, image2, image3, image4].map((image) =>
+            fetch(image)
+          );
+          Promise.all(promises).then((responses) =>
+            Promise.all(
+              responses.map((response) =>
+                response.blob().then((blob) => URL.createObjectURL(blob))
+              )
+            ).then((urls) =>
+              setUserDetails((prevState) => ({
+                ...prevState,
+                image1: urls[0],
+                image2: urls[1],
+                image3: urls[2],
+                image4: urls[3],
+              }))
+            )
+          );
+        }
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
-    alert("Images added successfully");
-  };
-
-  const convertBlobToBase64 = (blob) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onerror = reject;
-      reader.onload = () => {
-        resolve(reader.result);
-      };
-      reader.readAsDataURL(blob);
-    });
+  const handleTabChange = (tabName) => {
+    setActiveTab(tabName);
   };
 
   return (
-    <>
+    <div>
       <NewNavbar />
-      <div className="flex ">
-        <div className="w-1/5 h-[150vh] bg-gray-900">
-          {/* First column on the right */}
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex">
+        <div className="py-8 w-full md:w-1/4">
+          <ul className="flex flex-col space-y-4">
+            <li
+              className={`${
+                activeTab === "profile" ? "bg-gray-100" : ""
+              } rounded-lg`}
+            >
+              <button onClick={() => handleTabChange("profile")}>
+                Your Profile
+              </button>
+            </li>
+            <li
+              className={`${
+                activeTab === "updateProfile" ? "bg-gray-100" : ""
+              } rounded-lg`}
+            >
+              <button onClick={() => handleTabChange("updateProfile")}>
+                Update Profile
+              </button>
+            </li>
+            <li
+              className={`${
+                activeTab === "contactUs" ? "bg-gray-100" : ""
+              } rounded-lg`}
+            >
+              <button onClick={() => handleTabChange("contactUs")}>
+                Contact Us
+              </button>
+            </li>
+           <li>
+             <button onClick={() => {
+               localStorage.clear();
+               window.location.href = "/";
+             }}>Log Out</button>
+           </li>
+          </ul>
         </div>
-        <div className="w-4/5 flex h-[150vh] bg-gray-200">
-          {/* Second column on the left */}
-          <div className=" flex gap-4  mt-6">
-            <div className=" ml-72 h-[512px] bg-gray-100 w-[290px] relative flex ">
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => handleImageChange(e, setImage1)}
-                className="fixed h-[512px] w-[290px] opacity-0 cursor-pointer z-10"
-              />
-              {image1 && (
-                <img
-                  src={image1}
-                  alt="Box 1 Image"
-                  className="h-[512px]  w-[290px] object-cover"
-                  style={{ height: "100%" }}
-                />
-              )}
-              {!image1 && (
-                <div className="h-[512px]  w-[290px] flex items-center justify-center">
-                  <p className="text-gray-400">Upload Image 1</p>
+        <div className="w-full md:w-3/4">
+          {activeTab === "profile" ? (
+            <div className="py-8">
+              <div className="rounded-lg bg-white shadow-lg px-5 py-6 sm:px-6">
+                <div className="sm:flex sm:items-center sm:justify-between">
+                  <div className="sm:flex sm:space-x-5">
+                    <img
+                      className="mx-auto h-20 w-20 rounded-full sm:mx-0 sm:flex-shrink-0"
+                      src={userDetails.image1}
+                      alt=""
+                    />
+                    <div className="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
+                      <p className="text-xl font-bold text-gray-900 uppercase">
+                        {userData ? userData.name : ""}
+                      </p>
+                      <p className="text-sm font-medium text-gray-600">
+                      {userData ? userData.age : ""}-
+                      {userData ? userData.gender : ""}
+ 
+                      </p>
+                    </div>
+                  </div>
+                  <div className="mt-5 flex justify-center sm:mt-0 sm:ml-4">
+                    <a
+                      href="#"
+                      className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                    >
+                      Like
+                    </a>
+                  </div>
                 </div>
+              </div>
+              <div className="mb-2">
+                <div className="flex justify-center mt-8">
+                  <div className="w-full md:w-1/4 px-4 mb-4">
+                    <img
+                      src={userDetails.image1}
+                      alt=""
+                      className="rounded-lg shadow-md"
+                    />
+                  </div>
+                  <div className="w-full md:w-1/4 px-4 mb-4">
+                    <img
+                      src={userDetails.image2}
+                      alt=""
+                      className="rounded-lg shadow-md"
+                    />
+                  </div>
+                  <div className="w-full md:w-1/4 px-4 mb-4">
+                    <img
+                      src={userDetails.image3}
+                      alt=""
+                      className="rounded-lg shadow-md"
+                    />
+                  </div>
+                  <div className="w-full md:w-1/4 px-4 mb-4">
+                    <img
+                      src={userDetails.image4}
+                      alt=""
+                      className="rounded-lg shadow-md"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="bg-white shadow-md rounded-lg px-4 py-5 sm:p-6">
+                <h2 className="mb-3 text-lg font-bold text-gray-900">
+                  About Me
+                </h2>
+                <p className="text-gray-700 leading-normal">
+                {userData ? userData.aboutMe : ""}
+                </p>
+              </div>
+
+              <div className="bg-white shadow-md rounded-lg mt-8 px-4 py-5 sm:p-6">
+                <h2 className="mb-3 text-lg font-bold text-gray-900">
+                 Pickup Line
+                </h2>
+                <ul className="divide-y divide-gray-200">
+                  <li className="py-4 flex">
+                    <div className="flex-shrink-0"></div>
+                    <div className="ml-3">
+                      <p className="text-sm font-medium text-gray-900">
+                      {userData ? userData.pickupLine : ""}
+
+                      </p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          ) : (
+            <div className="bg-white shadow-md rounded-lg mt-8 px-4 py-5 sm:p-6">
+              {activeTab === "updateProfile" ? (
+                <ProfileUpd/>
+              ) : (
+                <h2 className="mb-3 text-lg font-bold text-gray-900">
+                  Contact Us
+                </h2>
               )}
-          </div>
+              {activeTab === "updateProfile" ? (
+                <form onSubmit={() => console.log("submit handler function")}>
+                  {/* form fields go here */}
+                </form>
+              ) : (
+                <form onSubmit={() => console.log("submit handler function")}>
+                  {/* form fields go here */}
+                </form>
+              )}
             </div>
-            <div className="w-1/3 grid gap-4 grid-cols-1 grid-rows-3">
-              <div className="w-32 h-[200px] mt-6 bg-gray-100 ">
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => handleImageChange(e, setImage2)}
-                  className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer z-10"
-                />
-                {image2 && (
-                  <img
-                    src={image2}
-                    alt="Box 2 Image"
-                    className="w-full h-full object-cover"
-                    style={{ height: "calc(100% - 20px)" }}
-                  />
-                )}
-                {!image2 && (
-                  <div className="w-full h-full flex items-center justify-center">
-                    <p className="text-gray-400">Upload Image 2</p>
-                  </div>
-                )}
-              </div>
-              <div className="h-48 w-[28%] bg-gray-100 relative">
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => handleImageChange(e, setImage3)}
-                  className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer z-10"
-                />
-                {image3 && (
-                  <img
-                    src={image3}
-                    alt="Box 3 Image"
-                    className="w-full h-full object-cover"
-                    style={{ height: "calc(100% - 20px)" }}
-                  />
-                )}
-                {!image3 && (
-                  <div className="w-full h-full flex items-center justify-center">
-                    <p className="text-gray-400">Upload Image 3</p>
-                  </div>
-                )}
-              </div>
-              <div className="h-48 w-[28%] bg-gray-100 relative">
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => handleImageChange(e, setImage4)}
-                  className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer z-10"
-                />
-                {image4 && (
-                  <img
-                    src={image4}
-                    alt="Box 4 Image"
-                    className="w-full h-full object-cover"
-                    style={{ height: "calc(100% - 20px)" }}
-                  />
-                )}
-                {!image4 && (
-                  <div className="w-full h-full flex items-center justify-center">
-                    <p className="text-gray-400">Upload Image 4</p>
-                  </div>
-                )}
-              </div>
-            </div>
-          <button
-            className="bg-red-400 h-10 mt-4 w-24 rounded-lg"
-            onClick={handleSubmit}
-          >
-            Submit
-          </button>
+          )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
