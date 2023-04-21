@@ -8,7 +8,11 @@ const UserDetailsSchema = new mongoose.Schema(
     image1: String,
     image2: String,
     image3: String,
-    image4: String
+    image4: String,
+    age:String,
+    gender:String,
+    aboutMe:String,
+    pickupLine:String
   },
   {
     collection: "UserInfo",

@@ -1,11 +1,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const app = express();
+const jwt = require('jsonwebtoken');
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 
-
+const app = express();
 app.use(cors());
 app.use(express.json());
 
@@ -141,7 +140,33 @@ app.get("/getImages", async(req, res) => {
   }
 });
 
+
+app.put("/profile", async (req, res) => {
+  const { name, age, gender, aboutMe, pickupLine, image1, image2, image3, image4 } = req.body;
+  
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      throw new Error("Authorization header is missing");
+    }
+    const token = authHeader.split(" ")[1];
+    const decodedToken = jwt.verify(token, JWT_SECRET);
+
+    const userEmail = decodedToken.email;
+
+    const updatedUser = await User.findOneAndUpdate(
+      { email: userEmail },
+      { name, age, gender, aboutMe, pickupLine, image1, image2, image3, image4 },
+      { new: true }
+    );
+
+    res.json({ message: "Profile updated successfully", user: updatedUser });
+  } catch (error) {
+    console.log(error);
+    res.json({ status: "error", error: error.message });
+  }
+});
+
 app.listen(5000, () => {
   console.log("server started....");
 });
-
