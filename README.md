@@ -113,5 +113,16 @@ The Rent a Girlfriend project is made possible by the fantastic contributions fr
 Feel the energy of our dynamic community and consider joining us to make your mark on the project!
 
 
-
 Happy exploring! 🚀🎉
+
+
+<p align="center"> 
+  <a href="https://python.org"><img src="http://forthebadge.com/images/badges/made-with-python.svg" alt="made-with-python"></a> 
+  <br> 
+  <img src="https://img.shields.io/github/contributors/j-a-y-e-s-h/Rent-A-Girlfriend?style=for-the-badge" alt="Contributors"> 
+  <img src="https://img.shields.io/github/repo-size/j-a-y-e-s-h/Rent-A-Girlfriend?style=for-the-badge" alt="Repository Size"> <br> 
+  <img src="https://img.shields.io/github/watchers/j-a-y-e-s-h/Rent-A-Girlfriend?style=for-the-badge" alt="Watchers"> 
+  <img src="https://img.shields.io/github/commit-activity/w/j-a-y-e-s-h/Rent-A-Girlfriend?style=for-the-badge" alt="Commit Activity"> 
+  <img src="https://img.shields.io/github/issues/j-a-y-e-s-h/Rent-A-Girlfriend?style=for-the-badge" alt="Issues"> 
+</p>
+
