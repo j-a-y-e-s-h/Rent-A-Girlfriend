@@ -10,7 +10,11 @@ Welcome to the exciting world of Rent a Girlfriend! This project lets you explor
 Embark on a thrilling journey through Rent a Girlfriend with our comprehensive [full demo video](https://youtu.be/xaJd1Wuz-js?si=O4S_bdFXtaXkBLDB). 🚀
 
 
-https://github.com/j-a-y-e-s-h/Rent-A-Girlfriend/assets/75063311/d7aec0e7-8ae2-45c0-b891-63802da1e1ed
+
+https://github.com/j-a-y-e-s-h/Rent-A-Girlfriend/assets/75063311/fcf07458-960e-42d4-8ca0-c69ba5b7ebef
+
+
+
 
 
 
