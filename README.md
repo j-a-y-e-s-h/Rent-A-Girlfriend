@@ -117,10 +117,15 @@ Happy exploring! 🚀🎉
 
 
 <p align="center"> 
-  <a href="https://python.org"><img src="http://forthebadge.com/images/badges/made-with-python.svg" alt="made-with-python"></a> 
+  <br> 
+  <img src="https://img.shields.io/badge/React.js-%2320232a?style=for-the-badge&logo=react" alt="React.js"> 
+  <img src="https://img.shields.io/badge/Node.js-%2320232a?style=for-the-badge&logo=node.js" alt="Node.js"> 
+  <img src="https://img.shields.io/badge/MongoDB-%2320232a?style=for-the-badge&logo=mongodb" alt="MongoDB"> 
+  <img src="https://img.shields.io/badge/Tailwind_CSS-%2320232a?style=for-the-badge&logo=tailwind-css" alt="Tailwind CSS"> 
+  <img src="https://img.shields.io/badge/JavaScript-%2320232a?style=for-the-badge&logo=javascript" alt="JavaScript"> 
   <br> 
   <img src="https://img.shields.io/github/contributors/j-a-y-e-s-h/Rent-A-Girlfriend?style=for-the-badge" alt="Contributors"> 
-  <img src="https://img.shields.io/github/repo-size/j-a-y-e-s-h/Rent-A-Girlfriend?style=for-the-badge" alt="Repository Size"> <br> 
+  <img src="https://img.shields.io/github/repo-size/j-a-y-e-s-h/Rent-A-Girlfriend?style=for-the-badge" alt="Repository Size"> 
   <img src="https://img.shields.io/github/watchers/j-a-y-e-s-h/Rent-A-Girlfriend?style=for-the-badge" alt="Watchers"> 
   <img src="https://img.shields.io/github/commit-activity/w/j-a-y-e-s-h/Rent-A-Girlfriend?style=for-the-badge" alt="Commit Activity"> 
   <img src="https://img.shields.io/github/issues/j-a-y-e-s-h/Rent-A-Girlfriend?style=for-the-badge" alt="Issues"> 
