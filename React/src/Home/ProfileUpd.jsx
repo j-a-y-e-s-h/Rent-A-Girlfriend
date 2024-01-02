@@ -11,21 +11,57 @@ function ProfileUpd() {
   const [image3, setImage3] = useState("");
   const [image4, setImage4] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+// ... (other imports and code)
 
-    // Convert blob to base64
-    const convertBlobToBase64 = async (blob) => {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onerror = reject;
-        reader.onload = () => {
-          resolve(reader.result);
-        };
-        reader.readAsDataURL(blob);
-      });
+const handleFileSize = (file) => {
+  if (file.size > 1000000) {
+    alert("File size exceeds 1 MB. Please upload an image of size less than 1 MB.");
+    return false;
+  }
+  return true;
+};
+
+const handleImageRatio = (file) => {
+  const img = new Image();
+  img.src = URL.createObjectURL(file);
+  return new Promise((resolve) => {
+    img.onload = () => {
+      if (img.width / img.height !== 9 / 16) {
+        alert("Image ratio should be 9:16. Please upload an image with that ratio.");
+        resolve(false);
+      } else {
+        resolve(true);
+      }
     };
+  });
+};
 
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const validateFile = async (file) => {
+    const isValidSize = handleFileSize(file);
+    const isValidRatio = await handleImageRatio(file);
+    return isValidSize && isValidRatio;
+  };
+
+  const convertBlobToBase64 = async (blob) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onerror = reject;
+      reader.onload = () => {
+        resolve(reader.result);
+      };
+      reader.readAsDataURL(blob);
+    });
+  };
+
+  const isValidFile1 = await validateFile(image1);
+  const isValidFile2 = await validateFile(image2);
+  const isValidFile3 = await validateFile(image3);
+  const isValidFile4 = await validateFile(image4);
+
+  if (isValidFile1 && isValidFile2 && isValidFile3 && isValidFile4) {
     const data = {
       name,
       age,
@@ -55,29 +91,9 @@ function ProfileUpd() {
       .catch((error) => {
         console.error("Error:", error);
       });
-  };
+  }
+};
 
-  const handleFileSize = (e) => {
-    if (e.target.files[0].size > 1000000) {
-      alert(
-        "File size exceeds 1 MB. Please upload an image of size less than 1 MB."
-      );
-      e.target.value = null;
-    }
-  };
-
-  const handleImageRatio = (e) => {
-    const img = new Image();
-    img.src = URL.createObjectURL(e.target.files[0]);
-    img.onload = () => {
-      if (img.width / img.height !== 9 / 16) {
-        alert(
-          "Image ratio should be 9:16. Please upload an image with that ratio."
-        );
-        e.target.value = null;
-      }
-    };
-  };
 
   return (
     <div className="container mx-auto p-6">

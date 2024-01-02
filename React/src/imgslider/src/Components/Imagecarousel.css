@@ -1,0 +1,10 @@
+
+.product-container {
+    margin: 9px 24vmin;
+    display: grid;
+    padding: 2vmin 2vmin;
+    scroll-behavior: smooth;
+    height: 96vmin;
+    width: 131vmin;
+}
+

@@ -1,0 +1,187 @@
+.mycard {
+    width: 116vmin;
+    height:93vmin;
+    padding: 28px 44px; 
+    margin: 0;
+    color: white;
+    overflow :hidden;
+    font-family: 'Nunito Sans', sans-serif;
+    font-family: 'Poppins', sans-serif;
+    background-color: white;
+    color: #252525;
+  
+}
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital@1&family=Poppins:wght@300&display=swap');
+
+*{
+  overflow: hidden;
+}
+
+
+.slide {
+  display: flex;
+  width: 120vmin;
+  height: 93vmin;
+  padding: 10px 26px;
+}
+.card {
+  width: 115vmin;
+  height: 86vmin;
+  border-radius: 35px;
+  display: flex;
+  box-shadow: 0 35px 45px -15px rgba(0, 0, 0, 0.35);
+  background-color: #fff;
+  overflow: hidden;
+}
+.card__img {
+  background-position: center;
+  width: 53%;
+  height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+#img01 {
+  background-image: url("Images/Product-2.jpeg");
+}
+
+#img02 {
+  background-image: url("Images/Product-1.jpeg");
+}
+
+#img03 {
+  background-image: url("Images/Product-4.jpeg");
+}
+
+#img04 {
+  background-image: url("Images/wp11260338.jpg");
+}
+
+#img05 {
+  background-image: url("Images/full41.jpg");
+}
+
+#img06 {
+  background-image: url("Images/krithishetty-stills-071121-001-1.jpg");
+}
+
+.card__content {
+  padding: 10% 5%;
+  box-sizing: border-box;
+  width: 50%;
+}
+
+.card__content-header {
+  font-weight: 800;
+  font-size: 54px;
+  font-size: 6vmin;
+  text-transform: capitalize;
+  padding: 3px 3px 12px;
+  letter-spacing: 0.01em;
+  line-height: 0.91;
+  margin: 3vmin 0 3.5vmin;
+}
+
+.age{
+  font-size:3.5vmin;
+  font-weight: 450;
+}
+.card__content-paragraph {
+  font-size: 3.4vmin;
+  line-height: 1.7;
+  font-weight: 450;
+  margin-bottom: 2.5vmin;
+}
+
+.card__content-link {
+  color: #BA3428;
+  font-size: 1.8vmin;
+  display: block;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+#prev{
+  cursor: pointer;
+  margin-top: 0px;
+}
+#next {
+  cursor: pointer;
+}
+#prev:hover:after, #prev:hover:after, #next:hover:after, #next:hover:after {
+  opacity: 1;
+}
+
+#prev:after, #next:after {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+#prev:after {
+  content: "↑";
+}
+
+#next:after {
+  content: "↓";
+}
+
+/* Second button */
+button{  
+  /* neon button css */
+  color: #000000b5;
+  border-color: #f32179;
+  font-size: 25px;
+  transition: 0.2s;
+  background-color: transparent;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 3em;
+  cursor: pointer;
+}
+button:hover{
+  /* hover css */
+  color:#fff;
+  box-shadow: 0 0 10px #f32179 , 0 0 20px #f03483 , 0 0 30px #f16fa6;
+}
+button:focus{
+	outline: none;
+}
+.action-buttons button{
+	position: absolute;
+	justify-content: center;
+	left: 45%;
+	top: 50%;
+	z-index: 100;
+}
+ .action-buttons .down-button {
+  transform: translateY(37vmin);
+ 	border: none;
+	width: 9%;
+	height: 4.5%;
+	margin: 10px 8.5px;
+    margin-left: 10px;
+	justify-content: center;
+	align-items: center;
+  border-radius: 50px;
+  cursor: pointer;
+ } 
+
+ .action-buttons .up-button {
+  transform: translateY(-41vmin);
+	border: none;
+	width: 9%;
+	height: 4.5%;
+	margin: 10px 8.5px;
+    margin-left: 11px;
+	justify-content: center;
+	align-items: center;
+  border-radius: 50px;
+	cursor: pointer;
+} 
