@@ -52,6 +52,12 @@ Before diving into the magical world of virtual relationships, make sure you hav
      - Add network access (allow access from anywhere if you're testing).
      - Create a new database and connect it (Connect to your application).
    - Change the MongoDB connection URL in `app.js` with your URL. [Demo](https://youtu.be/Emc7CtbXGqQ?si=5qbY4oh-_7159DgV)
+     
+     
+
+https://github.com/j-a-y-e-s-h/Rent-A-Girlfriend/assets/75063311/17b155a5-f20c-48d7-8cb5-c15631619467
+
+
 6. **Run the React App:**
 
    - Go to the React folder and run:
