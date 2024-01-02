@@ -120,7 +120,7 @@ Happy exploring! 🚀🎉
 <p align="center"> 
  <a href="https://python.org"><img src="http://forthebadge.com/images/badges/made-with-python.svg" alt="made-with-python"></a> 
  <br> 
-     <img src="https://img.shields.io/github/j-a-y-e-s-h/Rent-A-Girlfriendlicense/?style=for-the-badge" alt="LICENSE"> 
+     <img src="https://img.shields.io/github/j-a-y-e-s-h/Rent-A-Girlfriend/license/?style=for-the-badge" alt="LICENSE"> 
      <img src="https://img.shields.io/github/contributors/ishikki-akabane/Ruka-Bot?style=for-the-badge" alt="Contributors"> 
      <img src="https://img.shields.io/github/repo-size/ishikki-akabane/Ruka-Bot?style=for-the-badge" alt="Repository Size"> <br> 
      <img src="https://img.shields.io/github/forks/ishikki-akabane/Ruka-Bot?style=for-the-badge" alt="Forks"> 
