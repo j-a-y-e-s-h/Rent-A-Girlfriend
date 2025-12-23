@@ -105,9 +105,7 @@ You're now well-equipped to dive into the Rent a Girlfriend app and indulge in t
 The Rent a Girlfriend project is made possible by the fantastic contributions from these awesome individuals:
 
 - [Jayesh](https://github.com/j-a-y-e-s-h)
-- [Yash](https://github.com/YashPatil2023/)
-- [Kamlesh](https://github.com/kamlesh-IY9/)
-- [Rohil](https://)
+
 
 Feel the energy of our dynamic community and consider joining us to make your mark on the project!
 
