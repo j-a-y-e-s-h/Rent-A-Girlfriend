@@ -1,7 +1,5 @@
-﻿
-# Rent a Girlfriend Project 🌟
 
-Welcome to the exciting world of Rent a Girlfriend! This project lets you explore a fascinating application built with Node.js, Express, MongoDB, and React. Buckle up for a thrilling ride!
+Welcome to the exciting world of Dating Sites! This project lets you explore a fascinating application built with Node.js, Express, MongoDB, and React. Buckle up for a thrilling ride!
 
 ## Demo Videos
 
